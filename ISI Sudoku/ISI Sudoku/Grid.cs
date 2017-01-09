@@ -72,10 +72,16 @@ namespace ISI_Sudoku
         }
 
 
+
+        public bool checkAll(int x, int y, int i)
+        {
+            return (checkColumn(x, i) && checkLine(y, i) && checkSquare(x, y, i));
+        }
+
+
         public void fill()
         {
-            int count = 0;
-
+            fill2(0, 0, 0);
         }
 
         private bool fill2(int x, int y, int count)
