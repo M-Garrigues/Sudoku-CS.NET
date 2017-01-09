@@ -71,5 +71,28 @@ namespace ISI_Sudoku
             return test;
         }
 
+
+        public void fill()
+        {
+            int count = 0;
+
+        }
+
+        private bool fill2(int x, int y, int count)
+        {
+            if (count == 81) return true;
+
+            List<int> valeurs = new List<int>();
+            for(int i =1; i < 10; i++)
+            {
+                valeurs.Add(i);
+            } 
+
+
+
+
+        } 
     }   
+
+
 }
