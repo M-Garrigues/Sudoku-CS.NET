@@ -35,11 +35,13 @@ namespace ISI_Sudoku
             bool test = true;
             for (int j = 0; j < 9; j++)
             {
-                if (tabGrid[x,j] == i) test = false;
+                if (tabGrid[x, j] == i) test = false;
             }
 
             return test;
         }
+
+
 
 
         public bool checkLine(int y, int i)
@@ -61,9 +63,9 @@ namespace ISI_Sudoku
             int xdep = x - x % 3;
             int ydep = y - y % 3;
 
-            for(int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
-                for (int k = 0 ; k < 3; k++)
+                for (int k = 0; k < 3; k++)
                 {
                     if (tabGrid[xdep + j, ydep + k] == i) test = false;
                 }
@@ -79,26 +81,87 @@ namespace ISI_Sudoku
         }
 
 
-        public void fill()
+        public bool fill()
         {
-            fill2(0, 0, 0);
+            Coordinates coordinates = new Coordinates();
+            int count = 0;
+            fill2(count, coordinates);
+            return true;
+
         }
 
-        private bool fill2(int x, int y, int count)
+        private void fill2(int count, Coordinates coordinates)
         {
-            if (count == 81) return true;
-
-            List<int> valeurs = new List<int>();
-            for(int i =1; i < 10; i++)
+            if (count == 81)
             {
-                valeurs.Add(i);
-            } 
+                // return -1; 
+            }
+            else
+            {
+                List<int> listValues = newListValues();
+                int sizeList = 9;
+                int index, valueTested;
+                while (sizeList > 0)
+                {
+                    Console.WriteLine("Counteur : " + count); 
+                    Console.WriteLine("Size : " + sizeList); 
+                    Random rand = new Random();
+                    index = rand.Next(0, sizeList);
+                    Console.WriteLine("index : "+index); 
+                    valueTested = listValues[index];
+                    listValues.ForEach(Console.WriteLine);
+                    Console.WriteLine("valeur testée : " + valueTested); 
+                    if (checkAll(coordinates.getX(), coordinates.getY(), valueTested))
+                    {
+                        Console.WriteLine("Valeur validée : " + valueTested); 
+                        tabGrid[coordinates.getX(), coordinates.getY()] = valueTested;
+                        fill2(count + 1, coordinates.nextCoordinates());
 
 
 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Remove value " + listValues[index] + " at index " + index); 
+                        listValues.Remove(index+1);
+                        sizeList = listValues.Count();
+                    }
 
-        } 
-    }   
+
+                }
 
 
+
+            }
+
+
+        }
+
+        public List<int> newListValues()
+        {
+            List<int> values = new List<int>();
+            for (int i = 1; i < 10; i++)
+            {
+                values.Add(i);
+            }
+            return values;
+
+        }
+
+        public void Display()
+        {
+            for (int i =0; i<9; i++)
+            {
+                for (int j=0; j<9; j++)
+                {
+                    Console.WriteLine(tabGrid[i, j]); 
+                }
+                Console.WriteLine('\n');
+
+
+            }
+        }
+
+
+    }
 }

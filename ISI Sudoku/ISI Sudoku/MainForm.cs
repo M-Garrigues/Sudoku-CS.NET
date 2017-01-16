@@ -15,6 +15,10 @@ namespace ISI_Sudoku
         public MainForm()
         {
             InitializeComponent();
+            Grid grille = new Grid();
+            grille.fill();
+            grille.Display();
+            Console.WriteLine('D'); 
         }
     }
 }
