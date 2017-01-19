@@ -110,20 +110,18 @@ namespace ISI_Sudoku
                     Console.WriteLine("index : "+index); 
                     valueTested = listValues[index];
                     listValues.ForEach(Console.WriteLine);
-                    Console.WriteLine("valeur testée : " + valueTested); 
+                    Console.WriteLine("valeur testée : " + valueTested);
+                     
                     if (checkAll(coordinates.getX(), coordinates.getY(), valueTested))
                     {
                         Console.WriteLine("Valeur validée : " + valueTested); 
                         tabGrid[coordinates.getX(), coordinates.getY()] = valueTested;
                         fill2(count + 1, coordinates.nextCoordinates());
-
-
-
                     }
                     else
                     {
                         Console.WriteLine("Remove value " + listValues[index] + " at index " + index); 
-                        listValues.Remove(index+1);
+                        listValues.RemoveAt(index);
                         sizeList = listValues.Count();
                     }
 

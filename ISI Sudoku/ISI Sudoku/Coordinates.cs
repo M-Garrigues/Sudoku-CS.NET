@@ -45,7 +45,7 @@ namespace ISI_Sudoku
         public Coordinates nextCoordinates()
         {
 
-            if (y==9)
+            if (y==8)
             {
                 y = 0;
 
