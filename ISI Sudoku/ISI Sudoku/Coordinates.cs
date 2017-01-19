@@ -9,53 +9,71 @@ namespace ISI_Sudoku
     class Coordinates
     {
         private int x;
-        private int y; 
+        private int y;
 
         public int getX()
         {
-            return x; 
+            return x;
         }
 
         public int getY()
         {
-            return y; 
+            return y;
         }
 
         public void setX(int newX)
         {
-            x = newX; 
-        } 
+            x = newX;
+        }
 
         public void setY(int newY)
         {
-            y = newY; 
+            y = newY;
         }
 
         public Coordinates()
         {
             x = 0;
-            y = 0; 
+            y = 0;
         }
 
         public Coordinates(int newX, int newY)
         {
             x = newX;
-            y = newY; 
+            y = newY;
         }
         public Coordinates nextCoordinates()
         {
 
-            if (y==8)
+            if (y == 8)
             {
                 y = 0;
 
-                x++; 
-            } else
-            {
-                y++; 
+                x++;
             }
-            return new Coordinates(x, y); 
+            else
+            {
+                y++;
+            }
+            return new Coordinates(x, y);
         }
 
+
+
+        public Coordinates previousCoordinate()
+        {
+            if (y == 0)
+            {
+                y = 8;
+
+                x--;
+            }
+            else
+            {
+                y--;
+            }
+
+            return new Coordinates(x, y);
+        }
     }
 }

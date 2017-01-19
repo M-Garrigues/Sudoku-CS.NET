@@ -85,16 +85,14 @@ namespace ISI_Sudoku
         {
             Coordinates coordinates = new Coordinates();
             int count = 0;
-            fill2(count, coordinates);
-            return true;
-
+            return fill2(count, coordinates);
         }
 
-        private void fill2(int count, Coordinates coordinates)
+        private Boolean fill2(int count, Coordinates coordinates)
         {
             if (count == 81)
             {
-                // return -1; 
+                return true;
             }
             else
             {
@@ -109,30 +107,33 @@ namespace ISI_Sudoku
                     index = rand.Next(0, sizeList);
                     Console.WriteLine("index : "+index); 
                     valueTested = listValues[index];
-                    listValues.ForEach(Console.WriteLine);
+                    //listValues.ForEach(Console.WriteLine);
+                    Console.WriteLine(coordinates.getX() + "   " + coordinates.getY());
+
                     Console.WriteLine("valeur testée : " + valueTested);
-                     
+
                     if (checkAll(coordinates.getX(), coordinates.getY(), valueTested))
                     {
-                        Console.WriteLine("Valeur validée : " + valueTested); 
+
                         tabGrid[coordinates.getX(), coordinates.getY()] = valueTested;
-                        fill2(count + 1, coordinates.nextCoordinates());
+                        Console.WriteLine("Valeur validée : " + valueTested);
+                        if (fill2(count + 1, coordinates.nextCoordinates()))
+                        {
+                            return true;
+                        }
+                        coordinates.previousCoordinate();
                     }
-                    else
-                    {
+                    
+                    
                         Console.WriteLine("Remove value " + listValues[index] + " at index " + index); 
                         listValues.RemoveAt(index);
                         sizeList = listValues.Count();
-                    }
-
-
+                    
                 }
-
-
-
+                tabGrid[coordinates.getX(), coordinates.getY()] = 0;
+                return false;
             }
-
-
+            
         }
 
         public List<int> newListValues()
