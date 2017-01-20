@@ -101,22 +101,22 @@ namespace ISI_Sudoku
                 int index, valueTested;
                 while (sizeList > 0)
                 {
-                    Console.WriteLine("Counteur : " + count); 
-                    Console.WriteLine("Size : " + sizeList); 
+                    //Console.WriteLine("Counteur : " + count); 
+                    //Console.WriteLine("Size : " + sizeList); 
                     Random rand = new Random();
                     index = rand.Next(0, sizeList);
-                    Console.WriteLine("index : "+index); 
+                    //Console.WriteLine("index : "+index); 
                     valueTested = listValues[index];
                     //listValues.ForEach(Console.WriteLine);
-                    Console.WriteLine(coordinates.getX() + "   " + coordinates.getY());
+                    //Console.WriteLine(coordinates.getX() + "   " + coordinates.getY());
 
-                    Console.WriteLine("valeur testée : " + valueTested);
+                    //Console.WriteLine("valeur testée : " + valueTested);
 
                     if (checkAll(coordinates.getX(), coordinates.getY(), valueTested))
                     {
 
                         tabGrid[coordinates.getX(), coordinates.getY()] = valueTested;
-                        Console.WriteLine("Valeur validée : " + valueTested);
+                        //Console.WriteLine("Valeur validée : " + valueTested);
                         if (fill2(count + 1, coordinates.nextCoordinates()))
                         {
                             return true;
@@ -125,7 +125,7 @@ namespace ISI_Sudoku
                     }
                     
                     
-                        Console.WriteLine("Remove value " + listValues[index] + " at index " + index); 
+                        //Console.WriteLine("Remove value " + listValues[index] + " at index " + index); 
                         listValues.RemoveAt(index);
                         sizeList = listValues.Count();
                     
@@ -153,14 +153,42 @@ namespace ISI_Sudoku
             {
                 for (int j=0; j<9; j++)
                 {
-                    Console.WriteLine(tabGrid[i, j]); 
+                    Console.Write(tabGrid[i, j]); 
+                    if((j)%3 == 2) Console.Write(" ");
                 }
-                Console.WriteLine('\n');
-
+                Console.Write('\n');
+                if ((i) % 3 == 2) Console.Write("\n");
 
             }
         }
 
+
+
+
+        //================ SOLVER PART ====================
+
+        public List<Coordinates> checkGrid()
+        {
+            List<Coordinates> tab = new List<Coordinates>();
+            int temp;
+
+            for(int i = 0; i < 9; i++)
+            {
+                for(int j = 0; j < 9; j++)
+                {
+                    temp = tabGrid[i, j];
+
+                    tabGrid[i, j] = 0;
+                    if (!checkAll(i, j, temp))
+                    {
+                        tab.Add(new Coordinates(i, j));
+                        Console.WriteLine("Erreur aux coordonnées (" + i + "," + j + ").");
+                    }
+                    tabGrid[i, j] = temp;
+                }
+            }
+            return tab;
+        }
 
     }
 }

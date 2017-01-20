@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ISI_Sudoku
 {
-    class Coordinates
+    public class Coordinates
     {
         private int x;
         private int y;

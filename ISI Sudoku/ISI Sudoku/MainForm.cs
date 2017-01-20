@@ -18,7 +18,12 @@ namespace ISI_Sudoku
             Grid grille = new Grid();
             grille.fill();
             grille.Display();
-            Console.WriteLine('D'); 
+            Console.WriteLine('D');
+
+            if (!grille.checkGrid().Any())
+                Console.WriteLine("La grille est bonne.");
+            else
+                Console.WriteLine("La grille est fausse.");
         }
     }
 }
