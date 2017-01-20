@@ -30,7 +30,7 @@ namespace ISI_Sudoku
 
          
 
-
+        
 
         public bool checkColumn(int x, int i)
         {
@@ -77,10 +77,27 @@ namespace ISI_Sudoku
 
 
 
-        public bool checkAll(int x, int y, int i)
+        public bool checkAll(int x  , int y, int i)
         {
             return (checkColumn(x, i) && checkLine(y, i) && checkSquare(x, y, i));
         }
+
+
+
+
+
+        public void resetAll()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    tabGrid[i, j] = 0;
+                }
+            }
+        }
+
+
 
 
         public bool fill()

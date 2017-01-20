@@ -13,7 +13,10 @@ namespace ISI_Sudoku
     public partial class MainForm : Form
     {
         private Grid grid;
-        int niveau;
+        int level = 42;
+        Boolean newG = true;
+        private System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+        private Timer mytimer = new Timer();
 
         public MainForm()
         {
@@ -25,13 +28,22 @@ namespace ISI_Sudoku
             SGV.ColumnCount = 9;
             SGV.AllowUserToResizeColumns = false;
             SGV.AllowUserToResizeRows = false;
+
+            SGV.Columns[2].DividerWidth = 3;
+            SGV.Columns[5].DividerWidth = 3;
+            SGV.Rows[2].DividerHeight = 3;
+            SGV.Rows[5].DividerHeight = 3;
+
+            SGV.ClearSelection();
+
             for (int i = 0; i < 9; i++)
             {
-                SGV.Columns[i].Width = 50;
+                SGV.Columns[i].Width = 65;
                 for (int j = 0; j < 9; j++)
                 {
-                    SGV.Rows[j].Height = 50;
+                    SGV.Rows[j].Height = 65;
                     SGV.Rows[j].Cells[i].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    SGV.Rows[j].Cells[i].Selected = false;
                 }
 
             }
@@ -39,15 +51,21 @@ namespace ISI_Sudoku
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(grid.TabGrid[0,0] != 0)
-            grid.setZeros(81); // A MODIFIER
+            mytimer.Enabled = true;
+            stopWatch.Reset();
+            stopWatch.Start();
+            
+
+
+
+            if (!newG)
+                grid.resetAll();
 
             grid.fill();
 
-            grid.setZeros(niveau);
+            newG = false;
 
-            grid.Display();
-
+            grid.setZeros(level);
 
             
 
@@ -59,32 +77,62 @@ namespace ISI_Sudoku
                     SGV.Rows[i].Cells[j].Style.BackColor = Color.LightGray;
                     SGV.Rows[i].Cells[j].ReadOnly = true;
                     SGV.Rows[i].Cells[j].Value = grid.TabGrid[i,j];
+
                     if ((int)SGV.Rows[i].Cells[j].Value == 0)
                     {
                         SGV.Rows[i].Cells[j].Value = null;
-                        SGV.Rows[i].Cells[j].Style.BackColor = Color.White;
                         SGV.Rows[i].Cells[j].ReadOnly = false;
-
+                        SGV.Rows[i].Cells[j].Style.BackColor = Color.White;
+                        SGV.Rows[i].Cells[j].Selected = false;
                     }
                 }
             }
            
         }
 
-
+ 
 
 
 
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            niveau = 15 + (int)((int)choixNiveau.Value * 4.5);
+            level = 40 + (int)((int)choixNiveau.Value * 2.5);
+
+            if (level == 40) level = 2;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!grid.checkGrid().Any()) Console.WriteLine("BRAVOOOOOOLkjqsbckqsbckqcuiq");
-            else Console.WriteLine("nope");
+            if (!newG)
+            {
+
+
+            stopWatch.Stop();
+            
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if(SGV.Rows[j].Cells[i].Value != null) 
+                    grid.TabGrid[i,j] = int.Parse(SGV.Rows[j].Cells[i].Value.ToString());
+                }
+            }
+
+
+            if (!grid.checkGrid().Any())
+            {
+                MessageBox.Show("Félicitations, vous avez gagné!\n                   Temps écoulé:\n                          "+
+                stopWatch.Elapsed.Hours.ToString("00") + ":" +
+              stopWatch.Elapsed.Minutes.ToString("00") + ":" +
+             stopWatch.Elapsed.Seconds.ToString("00") );
+
+                    
+            }
+            else MessageBox.Show("Il y a des erreurs, essayez encore!");
+
+
+            }
         }
     }
 }
