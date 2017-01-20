@@ -167,6 +167,26 @@ namespace ISI_Sudoku
 
         //================ SOLVER PART ====================
 
+
+        public void setZeros(int n)
+        {
+            Random rand = new Random();
+            int x, y;
+
+            for (int i = 0; i < n; i++)
+            {
+                do
+                {
+                    x = rand.Next(0, 9);
+                    y = rand.Next(0, 9);
+                } while (tabGrid[x, y] == 0);
+
+                tabGrid[x, y] = 0;
+            }
+        }
+
+
+
         public List<Coordinates> checkGrid()
         {
             List<Coordinates> tab = new List<Coordinates>();
@@ -188,6 +208,67 @@ namespace ISI_Sudoku
                 }
             }
             return tab;
+        }
+
+
+        public Boolean solve()
+        {
+            return solve2(0, new Coordinates(0,0));
+        }
+
+        private Boolean solve2(int count,  Coordinates coordinates)
+        {
+            if (count == 81)
+            {
+                return true;
+            }
+            else
+            {
+                if(tabGrid[coordinates.getX(), coordinates.getY()] == 0)
+                {
+
+                    List<int> listValues = newListValues();
+                    int sizeList = 9;
+                    int index, valueTested;
+                    while (sizeList > 0)
+                    {
+                        Console.WriteLine("Counteur : " + count); 
+                        //Console.WriteLine("Size : " + sizeList); 
+                        Random rand = new Random();
+                        index = rand.Next(0, sizeList);
+                        //Console.WriteLine("index : "+index); 
+                        valueTested = listValues[index];
+                        //listValues.ForEach(Console.WriteLine);
+                        Console.WriteLine(coordinates.getX() + "   " + coordinates.getY());
+
+                        //Console.WriteLine("valeur testée : " + valueTested);
+
+                        if (checkAll(coordinates.getX(), coordinates.getY(), valueTested))
+                        {
+
+                            tabGrid[coordinates.getX(), coordinates.getY()] = valueTested;
+                            //Console.WriteLine("Valeur validée : " + valueTested);
+                            if (solve2(count + 1, coordinates.nextCoordinates()))
+                            {
+                                return true;
+                            }
+                            coordinates.previousCoordinate();
+                        }
+
+
+                        //Console.WriteLine("Remove value " + listValues[index] + " at index " + index); 
+                        listValues.RemoveAt(index);
+                        sizeList = listValues.Count();
+
+                    }
+                    tabGrid[coordinates.getX(), coordinates.getY()] = 0;
+                    return false;
+                }
+                else
+                {
+                   return solve2(++count, coordinates.nextCoordinates());
+                }
+            }
         }
 
     }

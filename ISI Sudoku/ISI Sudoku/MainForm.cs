@@ -24,6 +24,22 @@ namespace ISI_Sudoku
                 Console.WriteLine("La grille est bonne.");
             else
                 Console.WriteLine("La grille est fausse.");
+
+            Console.WriteLine("\n\n");
+
+            grille.setZeros(80);
+
+            grille.Display();
+            Console.WriteLine("\n\n");
+
+            grille.solve();
+
+            grille.Display();
+
+            if (!grille.checkGrid().Any())
+                Console.WriteLine("La grille est bonne.");
+            else
+                Console.WriteLine("La grille est fausse.");
         }
     }
 }
