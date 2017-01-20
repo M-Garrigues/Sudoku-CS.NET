@@ -28,6 +28,8 @@ namespace ISI_Sudoku
             }
         }
 
+         
+
 
 
         public bool checkColumn(int x, int i)
@@ -232,14 +234,14 @@ namespace ISI_Sudoku
                     int index, valueTested;
                     while (sizeList > 0)
                     {
-                        Console.WriteLine("Counteur : " + count); 
+                       // Console.WriteLine("Counteur : " + count); 
                         //Console.WriteLine("Size : " + sizeList); 
                         Random rand = new Random();
                         index = rand.Next(0, sizeList);
                         //Console.WriteLine("index : "+index); 
                         valueTested = listValues[index];
                         //listValues.ForEach(Console.WriteLine);
-                        Console.WriteLine(coordinates.getX() + "   " + coordinates.getY());
+                        //Console.WriteLine(coordinates.getX() + "   " + coordinates.getY());
 
                         //Console.WriteLine("valeur testée : " + valueTested);
 
